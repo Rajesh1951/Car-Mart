@@ -55,29 +55,5 @@ app.get("/", (req, res) => {
 //   }
 // })
 
-
-app.get("/dealer/list",requireAuth, async (req, res) => {
-  console.log('cookies is', req.cookies)
-  try {
-    const list = await OEM_Specs.find();
-    res.json(list);
-  }
-  catch (err) {
-    res.send(err)
-  }
-})
-
-// user getting available list
-
-app.get("/customer/list", requireAuth, async (req, res) => {
-  console.log('indexError',req.cookies)
-  try {
-    const list = await User.find();
-    res.json(list);
-  }
-  catch (err) {
-    res.send(err)
-  }
-})
 app.use(appRoutes)
 app.listen(400, () => console.log("listening @ 400"));

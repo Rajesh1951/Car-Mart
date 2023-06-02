@@ -13,18 +13,18 @@ const UserAuth = new mongoose.Schema({
     required: true
   }
 })
-UserAuth.pre('save', async function (next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
+// UserAuth.pre('save', async function (next) {
+//   // const salt = await bcrypt.genSalt();
+//   this.password = await bcrypt.hash(this.password, 10);
+//   next();
+// });
 UserAuth.statics.login = async function login(email, password) {
   try {
     const user = await this.findOne({ email });
     // console.log(user)
     if (user) {
       const compare = await bcrypt.compare(password, user.password)
-      // console.log(compare)
+      console.log(compare)
       if (compare) {
         // console.log(user)
         return user;

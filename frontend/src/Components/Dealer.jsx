@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import axios from 'axios';
-import { Stack, Box, Image, Button, VStack, HStack, Input, Menu, MenuButton, MenuItem, MenuList, Text, FormControl } from '@chakra-ui/react';
+import { ChevronDownIcon } from "@chakra-ui/icons"
+import { Table, Tr, Stack, Box, Image, Button, VStack, HStack, Input, Menu, MenuButton, MenuItem, MenuList, Text, TableContainer, Thead, Th, Tbody, Td } from '@chakra-ui/react';
 function Dealer() {
   const [dealerList, setDealerList] = useState([]);
   const [dealerData, setdealerData] = useState({});
@@ -45,7 +46,7 @@ function Dealer() {
       "accidents": input.accidents,
       "previousBuyers": input.previousBuyers,
       "registrationPlace": input.registrationPlace,
-      "image":dealerData.image
+      "image": dealerData.image
     })
       .catch((error) => {
         console.error(error);
@@ -64,48 +65,65 @@ function Dealer() {
     fetch();
   }, [])
   if (dealerList.length === 0)
-    return <h1>empty</h1>
+    return <Text fontSize='5xl'>Login to Access</Text>
   // console.log(dealerList[0])
   return (
     <div>
       <Menu>
-        <MenuButton>
+        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
           Menu
         </MenuButton>
         <MenuList>
+          {console.log('dealerList', dealerList)}
           {dealerList.map((element) =>
             <MenuItem key={element._id} onClick={() => setdealerData(element)}>{element.model}</MenuItem>
           )
           }
         </MenuList>
       </Menu>
-      <p>{dealerData.model} {dealerData.colors} {dealerData.year} {dealerData.price}</p>
+      {/* <p>{dealerData.model} {dealerData.colors} {dealerData.year} {dealerData.price}</p> */}
+      {(dealerData.model) &&
+        <TableContainer w='80%' m='auto auto'>
+          <Table variant='striped'>
+            <Thead>
+              <Tr>
+                <Th>Vehicle Name</Th>
+                <Th>Color</Th>
+                <Th>Manf. Year</Th>
+                <Th>Price(Rs.)</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>{dealerData.model}</Td>
+                <Td>{dealerData.colors}</Td>
+                <Td>{dealerData.year}</Td>
+                <Td>{dealerData.price}</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      }
       {Object.keys(dealerData).length > 0 ?
         <VStack>
           <Box >
             <Image h='400px' w='700' src={dealerData.image} alt='Dan Abramov' />
           </Box>
           {/* <FormControl > */}
-            <Stack direction={['column', 'row']}>
-              <Text >Kilometer</Text>
-              <Input minW='30' type='number' variant="outline" onChange={(e) => handleChange(e)} name={"Km"} value={input.Km} placeholder='Kms' />
-              <Text >Scratches</Text>
-              <Input type="number" variant="outline" onChange={(e) => handleChange(e)} name={'Scratches'} value={input.Scratches} placeholder='Scratches' />
-              <Text >color</Text>
-              <Input type='text' variant="outline" onChange={(e) => handleChange(e)} name={'paint'} value={input.paint} placeholder='color' />
-              <Text >Accidents</Text>
-              <Input type='number' variant="outline" onChange={(e) => handleChange(e)} name={'accidents'} value={input.accidents} placeholder='Accidents' />
-              <Text >Previous Buyers</Text>
-              <Input type='number' variant="outline" onChange={(e) => handleChange(e)} name={'previousBuyers'} value={input.previousBuyers} placeholder='Previous Buyers' />
-              <Text >Registration</Text>
-              <Input type='text' variant="outline" onChange={(e) => handleChange(e)} name={'registrationPlace'} value={input.registrationPlace} placeholder='Registration Place' />
-            </Stack>
+          <Stack direction={['column', 'row']}>
+            <Input minW='30' type='number' variant="outline" onChange={(e) => handleChange(e)} name={"Km"} value={input.Km} placeholder='Kms' />
+            <Input type="number" variant="outline" onChange={(e) => handleChange(e)} name={'Scratches'} value={input.Scratches} placeholder='Scratches' />
+            <Input type='text' variant="outline" onChange={(e) => handleChange(e)} name={'paint'} value={input.paint} placeholder='color' />
+            <Input type='number' variant="outline" onChange={(e) => handleChange(e)} name={'accidents'} value={input.accidents} placeholder='Accidents' />
+            <Input type='number' variant="outline" onChange={(e) => handleChange(e)} name={'previousBuyers'} value={input.previousBuyers} placeholder='Previous Buyers' />
+            <Input type='text' variant="outline" onChange={(e) => handleChange(e)} name={'registrationPlace'} value={input.registrationPlace} placeholder='Registration Place' />
+          </Stack>
           {/* </FormControl> */}
           <Button colorScheme='teal' variant='solid' type='submit' onClick={(e) => handleSubmit(e)}>
             Submit
           </Button>
         </VStack>
-        : 'Select vehicle from menu'
+        : <Text fontSize='3xl'>Select vehicle from menu</Text>
       }
     </div>
   )

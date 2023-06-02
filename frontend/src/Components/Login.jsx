@@ -1,29 +1,29 @@
 import React, { useState } from 'react'
-import { Button, Input } from '@chakra-ui/react';
+import { Button, HStack, Input, Box, VStack, Image, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 function Login() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [credential, setCredential] = useState({
     'email': '',
     'password': ''
-  })
+  });
+  const [loginBool, setLoginBool] = useState(true);
   const handleSubmit = async () => {
     // console.log(credential.email, credential.password);
     try {
-      axios.defaults.withCredentials = true;
-      await axios.post('http://localhost:400/login', { 'email': credential.email, 'password': credential.password },{withCredentials:true})
+      await axios.post(loginBool ? 'http://localhost:400/login' : 'http://localhost:400/signup', { 'email': credential.email, 'password': credential.password }, { withCredentials: true })
         .then(res => {
-          if(res?.data?.error){
+          if (res?.data?.error) {
             alert(res?.data?.error)
           }
-          else{
+          else {
             alert('login succesful')
             navigate('/home')
           }
           console.log(res)
         })
-        // .catch(err => { throw new Error(err) })
+      // .catch(err => { throw new Error(err) })
 
     }
     catch (error) {
@@ -41,9 +41,24 @@ function Login() {
   }
   return (
     <>
-      <Input name='email' placeholder='email' onChange={(e) => handleChange(e)} value={credential.email} />
-      <Input name='password' placeholder='password' onChange={(e) => handleChange(e)} value={credential.password} />
-      <Button onClick={() => handleSubmit()}>submit</Button>
+      <Box w='80%' borderRadius='50' boxShadow='dark-lg' m='auto auto' p='auto auto'>
+        <HStack p='5' mt='10' borderRadius='50' justifyContent='space-around'>
+          <Image boxSize='lg' src='https://www.logomyway.com/logos_new/16126/Sel_my_Car5_474394384860.png' />
+          <VStack p='10' w='40%'>
+            <HStack>
+              <Button size='lg' w='100%' bg={loginBool ? 'green' : 'grey'} onClick={() => setLoginBool(true)}>Login</Button>
+              <Button size='lg' w='100%' bg={loginBool ? 'grey' : 'green'} onClick={() => setLoginBool(false)}>Signup</Button>
+            </HStack>
+            <Box >
+              <Text fontSize='2xl' mt='10'>Enter Your Email</Text>
+              <Input size='lg' name='email' placeholder='email' onChange={(e) => handleChange(e)} value={credential.email} />
+              <Text fontSize='2xl' mt='10'>Enter Your Password</Text>
+              <Input size='lg' name='password' placeholder='password' onChange={(e) => handleChange(e)} value={credential.password} />
+              <Button size='lg' mt='10' onClick={() => handleSubmit()}>Submit</Button>
+            </Box>
+          </VStack>
+        </HStack>
+      </Box >
     </>
   )
 }

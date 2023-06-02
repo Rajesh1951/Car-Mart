@@ -6,7 +6,7 @@ const requireAuth= (req,res,next)=>{
    jwt.verify(token,'secret',(err,decodedToken)=>{
     if(err){
       console.error(err);
-      res.redirect('/');
+      res.send([]);
     }
     else{
       return next();
