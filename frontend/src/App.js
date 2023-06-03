@@ -10,6 +10,8 @@ import Login from './Components/Login';
 import Logout from './Components/Logout.jsx';
 import { ChakraProvider } from '@chakra-ui/react';
 import axios from 'axios'
+import { AuthContextProvider } from './Contexts/AuthContext';
+import RequireAuth from './Components/RequireAuth';
 
 axios.defaults.withCredentials = true;
 function App() {
@@ -25,7 +27,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path='/logout' element={<Logout />} />
-            <Route path="/" element={<Login />} />
+            <Route exact path="/" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </ChakraProvider>

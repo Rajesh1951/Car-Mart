@@ -10,5 +10,6 @@ router.post('/login', appController.login_post);
 router.get('/dealer/list', requireAuth, appController.dealer_list);
 router.get('/customer/list', requireAuth, appController.customer_list);
 router.get('/logout',appController.logout);
+router.get('/loggedIn',appController.loggedIn);
 
 module.exports = router;

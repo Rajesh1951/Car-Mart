@@ -135,3 +135,21 @@ module.exports.logout = (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });
   res.send('logged out');
 }
+
+module.exports.loggedIn = (req, res) => {
+  const token = req.cookies?.jwt;
+  if (!token) {
+    res.json(false);
+    console.log('no token')
+    return;
+  }
+  jwt.verify(token, 'secret', (err, decodedToken) => {
+    if (err) {
+      console.error('logged', err);
+      res.json(false);
+    }
+    else {
+      res.json(true);
+    }
+  })
+}
