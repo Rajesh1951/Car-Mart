@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button, HStack, Input, Box, VStack, Image, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
+import MyContext from '../Contexts/AuthContext';
 function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { login } = useContext(MyContext);
   const [credential, setCredential] = useState({
     'email': '',
     'password': ''
@@ -18,12 +20,13 @@ function Login() {
             alert(res?.data?.error)
           }
           else {
+            login();
             alert('login succesful')
             navigate('/home')
           }
           console.log(res)
         })
-      // .catch(err => { throw new Error(err) })
+        .catch(err => { throw new Error(err) })
 
     }
     catch (error) {
