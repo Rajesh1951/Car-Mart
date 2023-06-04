@@ -1,4 +1,4 @@
-// import axios from "axios";
+import axios from "axios";
 // import { createContext, useContext, useEffect, useState } from "react";
 
 // export const AuthContext = createContext(null);
@@ -24,21 +24,27 @@
 //   return useContext(AuthContext);
 // }
 // MyContext.js
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const MyContext = React.createContext();
 
 export const MyProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = React.useState(false);
-
-  const login = () => {
+  const [loggedIn, setLoggedIn] = React.useState(null);
+  
+  const login = async () => {
     // Perform login logic here
-    setLoggedIn(true);
+    const result = await axios.get('http://localhost:400/loggedIn');
+    console.log('login', result)
+    setLoggedIn(result.data);
   };
-
-  const logout = () => {
+  useEffect(()=>{
+    login();
+  },[])
+  const logout = async () => {
     // Perform logout logic here
-    setLoggedIn(false);
+    const result = await axios.get('http://localhost:400/loggedIn');
+    console.log('logout', result)
+    setLoggedIn(result.data);
   };
 
   return (

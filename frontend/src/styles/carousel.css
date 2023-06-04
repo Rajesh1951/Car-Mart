@@ -1,0 +1,27 @@
+.responsive>img {
+  max-width: 60%;
+}
+
+@media only screen and (max-width:1350px) {
+  .responsive>img {
+    max-width: 70%;
+  }
+}
+
+@media only screen and (max-width:1250px) {
+  .responsive>img {
+    max-width: 80%;
+  }
+}
+
+@media only screen and (max-width:950px) {
+  .responsive>img {
+    max-width: 90%;
+  }
+}
+
+@media only screen and (max-width:500px) {
+  .responsive>img {
+    max-width: 100%;
+  }
+}
