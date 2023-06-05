@@ -6,59 +6,67 @@ const UserSchema = mongoose.Schema({
   },
   model: {
     type: String,
-    required: false
+    required: true
   },
-  year: {
-    type: Number,
-    required: false
+  brandName: {
+    type: String,
+    required: true
   },
   price: {
     type: Number,
-    required: false
+    required: true
+  },
+  fuel: {
+    type: String,
+    required: true
+  },
+  vehicleType: {
+    type: String,
+    required: true
+  },
+  seats: {
+    type: String,
+    required: true
   },
   colors: {
     type: String,
-    required: false
+    required: true
   },
   mileage: {
-    type: Number,
-    required: false
-  },
-  power: {
-    type: Number,
-    required: false
-  },
-  maxSpeed: {
-    type: Number,
-    required: false
-  },
-  model: {
     type: String,
-    required: false
+    required: true
+  },
+  ratings: {
+    type: Number,
+    required: true
+  },
+  id: {
+    type: String,
+    required: true
   },
   Km: {
     type: Number,
-    required: false
+    required: true
   },
   Scratches: {
     type: Number,
-    required: false
+    required: true
   },
   paint: {
     type: String,
-    required: false
+    required: true
   },
   accidents: {
-    type: Boolean,
-    required: false
+    type: Number,
+    required: true
   },
   previousBuyers: {
     type: Number,
-    required: false
+    required: true
   },
   registrationPlace: {
     type: String,
-    required: false
+    required: true
   }
 });
 

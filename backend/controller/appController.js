@@ -15,10 +15,10 @@ module.exports.dealer_post = async (req, res) => {
     "model": req.body.model,
     "year": Number(req.body.year),
     "price": Number(req.body.price),
-    "colors": req.body.colors,
     "mileage": Number(req.body.mileage),
     "power": Number(req.body.power),
     "maxSpeed": Number(req.body.maxSpeed),
+    "colors": req.body.colors,
     "Km": Number(req.body.Km),
     "Scratches": Number(req.body.Scratches),
     "accidents": Number(req.body.accidents),
@@ -36,17 +36,19 @@ module.exports.dealer_post = async (req, res) => {
 }
 
 module.exports.service_post = async (req, res) => {
-  console.log('first')
   try {
     const OEM_SpecsData = new OEM_Specs({
       "model": req.body.model,
       "image": req.body.image,
-      "year": req.body.year,
+      "fuel": req.body.fuel,
       "price": req.body.price,
       "colors": req.body.colors,
       "mileage": req.body.mileage,
-      "power": req.body.power,
-      "maxSpeed": req.body.maxSpeed
+      "seats": req.body.seats,
+      "ratings": req.body.ratings,
+      "brandName": req.body.brandName,
+      "vehicleType": req.body.vehicleType,
+      "id": Number(req.body.id)
     });
     const result = await OEM_SpecsData.save();
     console.log(result)
@@ -153,3 +155,4 @@ module.exports.loggedIn = (req, res) => {
     }
   })
 }
+

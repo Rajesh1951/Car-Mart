@@ -14,9 +14,9 @@ function Header() {
   }
   // console.log('header', authContext);
   return (
-    <div style={{ marginTop: '0', position: 'sticky' }}>
+    <div style={{ top: '0', position: 'sticky',zIndex:'1' }}>
       <HStack h='20' bg='grey' justifyContent='space-between'>
-        <Link to={"/"}><Heading ml='3'>SellMyCar.com</Heading></Link>
+        <Link to={"/"}><Heading ml='3'>Vehicle Mart</Heading></Link>
         <Box w='30' dir='row' justifyContent='space-evenly'>
           <List>
             <Link to={"/home"} >home </Link>
