@@ -12,6 +12,7 @@ import Logout from './Components/Logout.jsx';
 import { ChakraProvider } from '@chakra-ui/react';
 import { MyProvider } from './Contexts/AuthContext';
 import RequireAuth from './Components/RequireAuth';
+import Footer from './Components/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -33,6 +34,7 @@ root.render(
         </BrowserRouter>
       </ChakraProvider>
     </MyProvider>
+    <Footer />
   </React.StrictMode>
 );
 

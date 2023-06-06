@@ -15,8 +15,8 @@ function Home() {
       <Carousel images={images} />
       <Heading textAlign='center' m='10vh auto'>What are you interested in today?</Heading>
       <HStack w='100%' justifyContent='space-evenly'>
-        <Button size={sizes}><Link to={"/dealer"} >Sell A Car</Link></Button>
-        <Button size={sizes}><Link to={"/user"} >Buy A Car</Link></Button>
+        <Link to={"/dealer"} ><Button size={sizes}>Sell A Car</Button></Link>
+        <Link to={"/user"} ><Button size={sizes}>Buy A Car</Button></Link>
       </HStack>
     </>
   )

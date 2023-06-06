@@ -9,7 +9,6 @@ function UserCard({ props }) {
       overflow='hidden'
       variant='outline'
       maxW={['60%']}
-
     >
       <Image
         objectFit='cover'
