@@ -7,7 +7,7 @@ function Pagination({ elements, elementPerPage, setPageNumber }) {
     pages.push(i);
   }
   return (
-    <HStack justifyContent='center'>
+    <HStack justifyContent='center' flexWrap='wrap'>
       {
         pages.map(element =>
           <Button key={element} onClick={() => setPageNumber(element)} >{element}</Button>

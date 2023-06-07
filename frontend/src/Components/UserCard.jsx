@@ -1,4 +1,4 @@
-import { Icon, Box, Card, HStack, Text, Image, Stack, Heading, CardBody, CardFooter, Button, VStack } from '@chakra-ui/react'
+import { Icon, Card, HStack, Text, Image, Stack, Heading, CardBody, CardFooter, Button, VStack } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import React from 'react'
 
@@ -8,7 +8,7 @@ function UserCard({ props }) {
       direction={{ base: 'column', sm: 'row' }}
       overflow='hidden'
       variant='outline'
-      maxW={['60%']}
+      // m='auto auto'
     >
       <Image
         objectFit='cover'
