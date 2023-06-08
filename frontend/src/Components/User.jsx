@@ -17,12 +17,14 @@ function User() {
 
   const theme = extendTheme(breakPoint);
   const [list, setList] = useState([]);
-  let [filteredList, setFilteredList] = useState(list);
+  const [filteredList, setFilteredList] = useState(list);
   const [radio, setRadio] = useState('1');
   const [sortRadio, setSortRadio] = useState('0');
   const [elementPerPage] = useState(6);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [searchBool, setSearchBool] = useState(false);
+  const [searchList, setSearchList] = useState([]);
   useEffect(() => {
     const fetch = async () => {
       let { data } = await axios.get('http://localhost:400/customer/list');
@@ -36,13 +38,20 @@ function User() {
   useEffect(() => {
     window.scroll(0, 0);
   }, [radio, sortRadio, page])
+
+  useEffect(() => {
+    setFilteredList(list);
+  }, [search])
+
   const funcSetPage = (pageNo) => {
     return setPage(pageNo)
   };
   const changeList = (range) => {
     setPage(1);
     setSortRadio('0');
-    let sec = [...list.filter((e) => {
+    let listToBeFiltered = (searchBool) ? searchList : list;
+    console.log(searchBool, searchList)
+    let sec = listToBeFiltered.filter((e) => {
       if (range == '2')
         return e.price >= 100000 && e.price < 500000;
       else if (range == '3') {
@@ -55,7 +64,7 @@ function User() {
         return e.price >= 5000000;
       }
       return e.price > 0;
-    })];
+    });
     setFilteredList(sec);
   }
   const sortList = (param, order) => {
@@ -65,17 +74,34 @@ function User() {
       filteredList.sort((x, y) => y[param] - x[param]);
 
   }
+
+  const handleSearch = () => {
+    setSearchBool(true)
+    setFilteredList(filteredList.filter((e) => {
+      return e.model.toLowerCase().includes(search);
+    }))
+    setSearchList(filteredList.filter((e) => {
+      return e.model.toLowerCase().includes(search);
+    }));
+  }
   const lastIndex = page * elementPerPage;
   const startIndex = lastIndex - elementPerPage;
 
   if (list.length < 1)
     return "Loading ...";
   return (
-    <Box w={{ xl: '60%', lg: '80%', md: '90%' }} ml={{ xl: '9%', lg: '8%', md: '5%' }}>
+    <Box w={{ xl: '70%', lg: '80%', md: '90%' }} ml={{ xl: '9%', lg: '8%', md: '5%' }}>
       <Stack>
         <Heading textAlign='center'>List Of Available Cars For You</Heading>
-        <Input placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)} />
-        <Button type='search'>search</Button>
+        <Input m='1' placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)} />
+        <Button onClick={() => handleSearch()} >Search</Button>
+        <Button onClick={() => {
+          setRadio('1');
+          setSortRadio('0');
+          setSearch('');
+          setSearchBool(false)
+          return setFilteredList(list)
+        }}>Reset</Button>
       </Stack>
       <Flex flexDir={{ md: 'row', sm: 'column', base: 'column', }}>
         <Box minW='20%'>

@@ -18,13 +18,12 @@ function Header() {
       <HStack h='20' bg='grey' justifyContent='space-between'>
         <Link to={"/"}><Heading ml='3'>Vehicle Mart</Heading></Link>
         <Box w='30' dir='row' justifyContent='space-evenly'>
-          <List>
-            <Link to={"/home"} >home </Link>
-            <Link to={"/contact"} >contact </Link>
+          <HStack flexWrap='wrap'>
+            <Link to={"/home"} >home</Link>
+            <Link to={"/contact"} >contact</Link>
             <Link to={"/about"} >about</Link>
-            {/* <Link to={"/logout"}>logout</Link> */}
             {loggedIn && <Button onClick={() => logoutHandle()}>logout</Button>}
-          </List>
+          </HStack>
         </Box>
       </HStack>
     </div>
