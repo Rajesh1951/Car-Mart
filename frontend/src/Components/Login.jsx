@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Button, HStack, Input, Box, VStack, Image, Text } from '@chakra-ui/react';
+import { Button, Stack, Hide, HStack, Input, Box, VStack, Image, Text, extendTheme, Show } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import MyContext from '../Contexts/AuthContext';
@@ -10,9 +10,16 @@ function Login() {
     'email': '',
     'password': ''
   });
+  const breakPoints = {
+    base: '340px',
+    sm: '768px',
+    md: '685px',
+    lg: '960px',
+    xl: '1040px',
+  }
+  const theme = extendTheme(breakPoints);
   const [loginBool, setLoginBool] = useState(true);
   const handleSubmit = async () => {
-    // console.log(credential.email, credential.password);
     try {
       await axios.post(loginBool ? 'http://localhost:400/login' : 'http://localhost:400/signup', { 'email': credential.email, 'password': credential.password }, { withCredentials: true })
         .then(res => {
@@ -21,10 +28,9 @@ function Login() {
           }
           else {
             login();
-            alert('login succesful')
-            navigate('/home')
+            alert('login succesful');
+            navigate('/home');
           }
-          console.log(res)
         })
         .catch(err => { throw new Error(err) })
 
@@ -43,26 +49,35 @@ function Login() {
     })
   }
   return (
-    <>
-      <Box w='80%' borderRadius='50' boxShadow='dark-lg' m='auto auto' p='auto auto'>
-        <HStack p='5' mt='10' borderRadius='50' justifyContent='space-around'>
-          <Image boxSize='lg' src='https://www.logomyway.com/logos_new/16126/Sel_my_Car5_474394384860.png' />
-          <VStack p='10' w='40%'>
+    <Box h='83vh'>
+      <Box w='80%' borderRadius={{ xl: '50', lg: '40',md:'20',base:'10' }} boxShadow='dark-lg'
+        // m={{ sm: '10 10 auto auto', md: 'auto auto', lg: 'auto auto' }} 
+        m='auto auto'
+        p='auto auto'>
+        <HStack p='5' mt={{ '2xl': '10', md: '4' }} borderRadius='50' justifyContent='space-around'>
+          <Hide below='680px'>
+            <Image boxSize={{ '2xl': 'lg', xl: 'md' }} src='https://www.logomyway.com/logos_new/16126/Sel_my_Car5_474394384860.png' />
+          </Hide>
+          <VStack p={{ '2xl': '10', md: '0' }} w={{ sm: '100%', md: '40%' }}>
             <HStack>
-              <Button size='lg' w='100%' bg={loginBool ? 'green' : 'grey'} onClick={() => setLoginBool(true)}>Login</Button>
-              <Button size='lg' w='100%' bg={loginBool ? 'grey' : 'green'} onClick={() => setLoginBool(false)}>Signup</Button>
+              <Button
+                size={['sm', 'md', 'lg']}
+                w='100%' bg={loginBool ? 'green' : 'grey'} onClick={() => setLoginBool(true)}>Login</Button>
+              <Button
+                size={['sm', 'md', 'lg']}
+                w='100%' bg={loginBool ? 'grey' : 'green'} onClick={() => setLoginBool(false)}>Signup</Button>
             </HStack>
             <Box >
-              <Text fontSize='2xl' mt='10'>Enter Your Email</Text>
-              <Input size='lg' name='email' placeholder='email' onChange={(e) => handleChange(e)} value={credential.email} />
-              <Text fontSize='2xl' mt='10'>Enter Your Password</Text>
-              <Input size='lg' name='password' placeholder='password' onChange={(e) => handleChange(e)} value={credential.password} />
-              <Button size='lg' mt='10' onClick={() => handleSubmit()}>Submit</Button>
+              <Text fontSize={{ '2xl': '2xl' }} mt={{ '2xl': '10', md: '2', base: '5' }}>Enter Your Email</Text>
+              <Input size={['sm', 'md', 'lg']} name='email' placeholder='email' onChange={(e) => handleChange(e)} value={credential.email} />
+              <Text fontSize={{ '2xl': '2xl', md: 'md' }} mt={{ '2xl': '10', md: '2', base: '5' }}>Enter Your Password</Text>
+              <Input size={['sm', 'md', 'lg']} name='password' placeholder='password' onChange={(e) => handleChange(e)} value={credential.password} />
+              <Button size={['sm', 'md', 'lg']} mt={{ '2xl': '10', md: '2' }} onClick={() => handleSubmit()}>Submit</Button>
             </Box>
           </VStack>
         </HStack>
       </Box >
-    </>
+    </Box>
   )
 }
 

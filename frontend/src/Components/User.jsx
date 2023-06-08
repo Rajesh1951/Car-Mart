@@ -1,5 +1,5 @@
 import { Text, HStack, VStack, Box, Radio, RadioGroup, Stack, Heading, Divider, Flex, extendTheme, Input, Button } from '@chakra-ui/react';
-import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
+import { ArrowDownIcon, ArrowUpIcon, SearchIcon,RepeatIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
@@ -41,6 +41,10 @@ function User() {
 
   useEffect(() => {
     setFilteredList(list);
+    if(search.length===0){
+      setRadio('1');
+      setSortRadio('0');
+    }
   }, [search])
 
   const funcSetPage = (pageNo) => {
@@ -50,7 +54,6 @@ function User() {
     setPage(1);
     setSortRadio('0');
     let listToBeFiltered = (searchBool) ? searchList : list;
-    console.log(searchBool, searchList)
     let sec = listToBeFiltered.filter((e) => {
       if (range == '2')
         return e.price >= 100000 && e.price < 500000;
@@ -93,15 +96,18 @@ function User() {
     <Box w={{ xl: '70%', lg: '80%', md: '90%' }} ml={{ xl: '9%', lg: '8%', md: '5%' }}>
       <Stack>
         <Heading textAlign='center'>List Of Available Cars For You</Heading>
-        <Input m='1' placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)} />
-        <Button onClick={() => handleSearch()} >Search</Button>
-        <Button onClick={() => {
-          setRadio('1');
-          setSortRadio('0');
-          setSearch('');
-          setSearchBool(false)
-          return setFilteredList(list)
-        }}>Reset</Button>
+        <HStack>
+          <Input m='1' placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)} />
+          <Button onClick={() => handleSearch()} rightIcon={<SearchIcon />}>Search</Button>
+          <Button onClick={() => {
+            setRadio('1');
+            setSortRadio('0');
+            setSearch('');
+            setSearchBool(false);
+            setSearchList([]);
+            return setFilteredList(list)
+          }} rightIcon={<RepeatIcon />}>Reset</Button>
+        </HStack>
       </Stack>
       <Flex flexDir={{ md: 'row', sm: 'column', base: 'column', }}>
         <Box minW='20%'>
